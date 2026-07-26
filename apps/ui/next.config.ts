@@ -2,6 +2,26 @@ import type { NextConfig } from 'next'
 
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import { withSentryConfig } from '@sentry/nextjs'
+import { execFileSync } from 'node:child_process'
+
+function getRepositoryUrl() {
+  const owner = process.env.VERCEL_GIT_REPO_OWNER?.trim()
+  const repository = process.env.VERCEL_GIT_REPO_SLUG?.trim()
+
+  if (owner && repository) return `https://github.com/${owner}/${repository}`
+
+  const origin = execFileSync('git', ['remote', 'get-url', 'origin'], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'ignore'],
+  }).trim()
+  const repositoryPath = /^(?:https:\/\/github\.com\/|git@github\.com:)([^/]+\/[^/]+?)(?:\.git)?$/.exec(origin)?.[1]
+
+  if (!repositoryPath) throw new Error(`Unsupported GitHub origin URL: ${origin}`)
+
+  return `https://github.com/${repositoryPath}`
+}
+
+const repositoryUrl = getRepositoryUrl()
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -30,6 +50,11 @@ const nextConfig: NextConfig = {
   // https://nextjs.org/docs/app/guides/redirecting#redirects-in-nextconfigjs
   async redirects() {
     return [
+      {
+        source: '/github',
+        destination: repositoryUrl,
+        permanent: false,
+      },
       {
         // https://web.dev/articles/change-password-url
         source: '/.well-known/change-password',

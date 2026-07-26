@@ -5,8 +5,6 @@ Subvocab transforms your preparation for watching movies or reading books in Eng
 <!-- window.resizeTo(1260, 900); -->
 <img width="1328" height="968" alt="Screenshot" src="https://github.com/user-attachments/assets/ed289117-e602-4633-904f-2018b4797dec" />
 
-[Visualization of this repo](https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=kyle1an%2Fsub-vocab)
-
 ## How It Works
 
 1. **Input Your Text**: Add any English material, such as subtitles or articles.

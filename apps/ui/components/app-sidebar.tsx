@@ -99,7 +99,7 @@ export function AppSidebar({
                 asChild
               >
                 <a
-                  href="https://github.com/kyle1an/sub-vocab"
+                  href="/github"
                   target="_blank"
                   className="group/bg block px-2 *:z-10"
                   rel="noreferrer noopener"
